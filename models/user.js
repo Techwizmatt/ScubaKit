@@ -105,6 +105,14 @@ module.exports = (database, DataTypes) => {
       onUpdate: 'NO ACTION'
     }))
 
+    associations.push(user.hasMany(database.models.belonging, {
+      foreignKey: 'id',
+      targetKey: 'userId',
+      as: 'role',
+      onDelete: 'NO ACTION',
+      onUpdate: 'NO ACTION'
+    }))
+
     return Promise.allSettled(associations)
   }
 

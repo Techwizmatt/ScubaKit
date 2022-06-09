@@ -21,11 +21,15 @@ const database = new Sequelize({
 
 database.import(path.join(process.cwd(), '/models/user'))
 database.import(path.join(process.cwd(), '/models/role'))
+database.import(path.join(process.cwd(), '/models/manufacturer'))
+database.import(path.join(process.cwd(), '/models/category'))
+database.import(path.join(process.cwd(), '/models/equipment'))
+database.import(path.join(process.cwd(), '/models/belonging'))
 
 try {
   database.sync({
     force: false,
-    alter: true
+    alter: (process.env.DB_SYNC === 'TRUE')
   }).then(data => {
     const associations = []
     const setup = []
@@ -45,18 +49,20 @@ try {
 const doProcess = (promises) => {
   Promise.all(promises).then(settled => {
     settled.forEach(processes => {
-      processes.forEach(process => {
-        logger(chalk.greenBright(process.status))
+      if (processes !== undefined) {
+        processes.forEach(process => {
+          logger(chalk.greenBright(process.status))
 
-        if (process.status !== 'fulfilled') {
-          try {
-            console.log(chalk.bgRed.white(JSON.stringify(process, null, 1)))
-          } catch (error) {
-            console.log(chalk.bgRed.white(error.message))
-            console.log(process)
+          if (process.status !== 'fulfilled') {
+            try {
+              console.log(chalk.bgRed.white(JSON.stringify(process, null, 1)))
+            } catch (error) {
+              console.log(chalk.bgRed.white(error.message))
+              console.log(process)
+            }
           }
-        }
-      })
+        })
+      }
     })
   })
 }
