@@ -57,7 +57,7 @@ ${chalk.bgCyanBright('       [BODY]        ')}
 ${chalk.cyanBright(JSON.stringify(request.body, null, 2))}
 `)
 
-  next()
+  // next()
 })
 
 app.use('/', require(path.join(process.cwd(), '/routes')))

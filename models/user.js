@@ -108,7 +108,7 @@ module.exports = (database, DataTypes) => {
     associations.push(user.hasMany(database.models.belonging, {
       foreignKey: 'id',
       targetKey: 'userId',
-      as: 'role',
+      as: 'belongings',
       onDelete: 'NO ACTION',
       onUpdate: 'NO ACTION'
     }))

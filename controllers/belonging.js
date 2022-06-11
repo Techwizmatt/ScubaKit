@@ -84,7 +84,6 @@ const belonging = {
           }
         ],
         where: {
-          id: id,
           isActive: true
         }
       }).then(belonging => {
